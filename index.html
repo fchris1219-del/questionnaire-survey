@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>清静峰生活满意度与弟子关系调研（内部）</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap');
+
+:root {
+  --paper:#f4f1ea;--bamboo-dark:#2d4a3e;--bamboo:#3d6b5a;--bamboo-light:#5a8f7a;
+  --bamboo-pale:#a8c5b8;--bamboo-mist:rgba(61,107,90,0.06);
+  --ink:#2a2f2c;--ink-light:#5c6560;--red:#8b2020;--blood:#6b1010;--gold:#b8976a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Noto Serif SC','SimSun',serif;background:var(--bamboo-dark);
+  background-image:radial-gradient(ellipse at 20% 10%,rgba(90,143,122,.18)0%,transparent 60%),
+  radial-gradient(ellipse at 80% 90%,rgba(90,143,122,.12)0%,transparent 50%);
+  color:var(--ink);min-height:100vh;overflow-x:hidden;transition:background 3s}
+
+/* Phase Styles */
+body.phase3-gradient {
+  background: linear-gradient(to bottom, var(--bamboo-dark), var(--blood));
+}
+body.phase4-horror {
+  background: var(--blood);
+}
+
+/* BG bamboo */
+.bamboo-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.bs{position:absolute;width:3px;background:linear-gradient(to bottom,rgba(90,143,122,.12),rgba(90,143,122,.04));border-radius:2px}
+.bs:nth-child(1){left:5%;height:100%}.bs:nth-child(2){left:8%;height:85%;top:15%}
+.bs:nth-child(3){right:6%;height:90%;top:5%}.bs:nth-child(4){right:10%;height:75%;top:20%}
+.bs:nth-child(5){left:12%;height:60%;top:30%;width:2px}.bs:nth-child(6){right:14%;height:70%;top:10%;width:2px}
+.bs::before,.bs::after{content:'';position:absolute;left:-2px;width:7px;height:2px;background:rgba(90,143,122,.15);border-radius:1px}
+.bs:nth-child(1)::before{top:25%}.bs:nth-child(1)::after{top:55%}
+.bs:nth-child(2)::before{top:35%}.bs:nth-child(2)::after{top:70%}
+.bs:nth-child(3)::before{top:20%}.bs:nth-child(3)::after{top:60%}
+.bs:nth-child(4)::before{top:40%}.bs:nth-child(4)::after{top:75%}
+.leaf{position:fixed;pointer-events:none;z-index:1;animation:ld 22s ease-in-out infinite}
+.leaf svg{width:40px;height:14px}
+@keyframes ld{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-15px) rotate(5deg)}50%{transform:translateY(-5px) rotate(-3deg)}75%{transform:translateY(-20px) rotate(8deg)}}
+
+/* Paper */
+.paper{position:relative;z-index:2;max-width:740px;margin:50px auto;padding:60px 55px 70px;
+  background:var(--paper);background-image:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(61,107,90,.05) 39px,rgba(61,107,90,.05) 40px);
+  box-shadow:0 2px 30px rgba(0,0,0,.25),0 0 80px rgba(0,0,0,.1);border:1px solid rgba(90,143,122,.2);
+  transition:box-shadow 4s, background 3s;min-height:90vh}
+.paper.bloodied{box-shadow:0 2px 30px rgba(0,0,0,.25),0 0 80px rgba(0,0,0,.1),inset 0 0 120px rgba(107,16,16,.1)}
+.paper.horror {
+  background: #2a0505;
+  color: #cc9999;
+  border-color: var(--blood);
+  background-image: repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(139,32,32,.1) 39px,rgba(139,32,32,.1) 40px);
+}
+.cd{position:absolute;opacity:.15}.cd.tl{top:10px;left:10px;width:55px;height:55px;border-top:2px solid var(--bamboo);border-left:2px solid var(--bamboo)}
+.cd.tr{top:10px;right:10px;width:55px;height:55px;border-top:2px solid var(--bamboo);border-right:2px solid var(--bamboo)}
+.cd.bl{bottom:10px;left:10px;width:55px;height:55px;border-bottom:2px solid var(--bamboo);border-left:2px solid var(--bamboo)}
+.cd.br{bottom:10px;right:10px;width:55px;height:55px;border-bottom:2px solid var(--bamboo);border-right:2px solid var(--bamboo)}
+.ist{position:absolute;border-radius:50%;pointer-events:none;opacity:0;transition:opacity 5s}.ist.v{opacity:1}
+.i1{width:140px;height:90px;top:38%;right:15px;background:radial-gradient(ellipse,rgba(61,107,90,.1)0%,transparent 70%)}
+.i2{width:180px;height:120px;bottom:28%;left:-10px;background:radial-gradient(ellipse,rgba(107,16,16,.09)0%,transparent 70%)}
+.i3{width:100px;height:100px;top:55%;right:40px;background:radial-gradient(ellipse,rgba(107,16,16,.12)0%,transparent 70%)}
+
+/* Header */
+.hdr{text-align:center;margin-bottom:45px;padding-bottom:28px;border-bottom:1px solid rgba(61,107,90,.2)}
+.seal{width:72px;height:72px;margin:0 auto 20px;border:2px solid var(--bamboo);border-radius:4px;
+  display:flex;align-items:center;justify-content:center;font-family:'Ma Shan Zheng',cursive;
+  font-size:28px;color:var(--bamboo);transform:rotate(-4deg);opacity:.75;letter-spacing:6px}
+.hdr h1{font-weight:900;font-size:24px;color:var(--bamboo-dark);letter-spacing:6px;margin-bottom:8px}
+.hdr .sub{font-size:13px;color:var(--ink-light);letter-spacing:2.5px}
+.hdr .org{font-size:11px;color:var(--ink-light);margin-top:12px;letter-spacing:1px;opacity:.6}
+.notice{background:var(--bamboo-mist);border-left:3px solid var(--bamboo-pale);padding:16px 20px;margin-bottom:40px;font-size:13px;line-height:2.1;color:var(--ink-light)}
+.notice strong{color:var(--bamboo-dark)}
+.notice .hn{font-size:11px;color:var(--bamboo);opacity:.4;margin-top:5px}
+
+/* Progress */
+.pbar{display:flex;justify-content:center;gap:8px;margin-bottom:40px;flex-wrap:wrap}
+.pd{width:10px;height:10px;border-radius:50%;border:1.5px solid var(--bamboo-pale);background:transparent;transition:all .4s}
+.pd.done{background:var(--bamboo-light);border-color:var(--bamboo-light)}
+.pd.cur{border-color:var(--bamboo);box-shadow:0 0 6px rgba(61,107,90,.3)}
+.pd.dk{background:var(--red);border-color:var(--red)}
+
+/* Q area */
+.qa{min-height:320px}
+.qs{display:none;animation:fi .6s ease forwards}.qs.act{display:block}
+@keyframes fi{0%{opacity:0;transform:translateY(18px)}100%{opacity:1;transform:translateY(0)}}
+.qn{font-family:'Ma Shan Zheng',cursive;font-size:14px;color:var(--bamboo-light);letter-spacing:3px;margin-bottom:8px}
+.qn.sin{color:var(--red)}
+.qt{font-size:16px;font-weight:600;line-height:2;margin-bottom:20px;color:var(--ink);transition:color 2s}
+.qt.sin{color:var(--blood)}
+.opts{display:flex;flex-direction:column;gap:10px}
+.ol{display:flex;align-items:flex-start;gap:12px;padding:14px 18px;border:1px solid rgba(61,107,90,.15);
+  border-radius:3px;cursor:pointer;transition:all .35s;font-size:14.5px;line-height:1.8;
+  background:rgba(255,255,255,.35);position:relative}
+.ol:hover{border-color:var(--bamboo-pale);background:rgba(61,107,90,.03)}
+.ol input[type=radio]{margin-top:5px;accent-color:var(--bamboo);flex-shrink:0}
+.ol.sel{border-color:var(--bamboo);background:rgba(61,107,90,.05)}
+.ol.dsel{border-color:rgba(139,32,32,.4);background:rgba(139,32,32,.04)}
+
+/* Disabled Button Style: Red Shake */
+.hbtn.dis, .ecl.dis {
+  opacity: 1;
+  cursor: not-allowed;
+  pointer-events: auto;
+  border-color: var(--red);
+  color: var(--red);
+}
+.hbtn.dis:active, .ecl.dis:active {
+  animation: shake 0.3s ease-in-out;
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+}
+
+/* Whisper */
+.ow{display:none;font-size:12px;color:var(--red);margin-top:6px;font-style:italic;letter-spacing:1px}
+.ol.sel .ow,.ol.dsel .ow{display:block;animation:wi 1.5s ease forwards}
+@keyframes wi{0%{opacity:0;transform:translateY(-3px)}100%{opacity:.7;transform:translateY(0)}}
+.ow .r{color:var(--red);font-weight:700}
+
+/* Typewriter whisper */
+.tw{display:none;font-size:12px;color:var(--red);margin-top:6px;font-style:italic;letter-spacing:1px;opacity:.7}
+.ol.sel .tw,.ol.dsel .tw{display:block}
+
+/* Buttons */
+.nb{display:inline-block;margin-top:30px;padding:11px 50px;background:var(--bamboo-dark);color:var(--paper);
+  border:none;font-family:'Noto Serif SC',serif;font-size:14px;letter-spacing:6px;
+  cursor:pointer;border-radius:2px;transition:all .3s}
+.nb:hover{background:var(--bamboo);box-shadow:0 0 15px rgba(61,107,90,.2)}
+.nb.ss:hover{background:var(--blood);box-shadow:0 0 20px rgba(107,16,16,.25)}
+
+/* Q12 */
+.q12t{font-size:17px;font-weight:700;line-height:2.3;color:var(--blood);margin-bottom:22px;letter-spacing:.5px;font-family:'Ma Shan Zheng',cursive}
+.q12ta{width:100%;min-height:130px;padding:16px;border:1px solid rgba(61,107,90,.2);border-radius:3px;
+  background:rgba(255,255,255,.45);font-family:'Noto Serif SC',serif;font-size:14.5px;line-height:2;
+  color:var(--ink);resize:vertical;outline:none;transition:border-color .4s}
+.q12ta:focus{border-color:var(--blood)}
+.q12ta::placeholder{color:rgba(61,107,90,.3);font-style:italic}
+.ch{text-align:right;font-size:11px;color:var(--ink-light);margin-top:5px;opacity:.6}
+
+/* Ghost bubble */
+.gb{position:fixed;top:50%;right:25px;transform:translateY(-50%);max-width:260px;padding:18px 20px;
+  background:rgba(30,44,38,.94);color:rgba(168,197,184,.9);font-size:13.5px;line-height:2;
+  border:1px solid rgba(90,143,122,.25);border-radius:3px;box-shadow:0 6px 40px rgba(0,0,0,.45);
+  z-index:100;font-family:'Noto Serif SC',serif;opacity:0;pointer-events:none;transition:opacity .8s}
+.gb.show{opacity:1;pointer-events:auto}
+.gb .sp{font-size:10px;color:rgba(90,143,122,.4);letter-spacing:3px;margin-bottom:6px;font-family:'Ma Shan Zheng',cursive}
+
+/* Horror overlay */
+.ho{position:fixed;inset:0;background:rgba(8,12,10,0);z-index:300;display:flex;align-items:center;
+  justify-content:center;pointer-events:none;opacity:0;transition:background .8s,opacity .8s}
+.ho.act{background:rgba(8,12,10,.92);pointer-events:all;opacity:1}
+.hb{max-width:460px;padding:40px 35px;text-align:center;opacity:0;transform:scale(.92);transition:all .6s ease .3s}
+.ho.act .hb{opacity:1;transform:scale(1)}
+.ht{font-size:17px;color:rgba(168,197,184,.9);font-family:'Noto Serif SC',serif;line-height:2.6;letter-spacing:1.5px;margin-bottom:28px}
+.ht .r{color:var(--red)}
+.hbtn{padding:9px 28px;background:transparent;border:1px solid rgba(90,143,122,.25);
+  color:rgba(168,197,184,.5);font-family:'Noto Serif SC',serif;font-size:12px;letter-spacing:4px;
+  cursor:pointer;transition:all .3s;margin:0 6px}
+.hbtn:hover{border-color:rgba(168,197,184,.5);color:rgba(168,197,184,.8)}
+.hbtn-row{display:flex;justify-content:center;gap:14px;margin-top:10px}
+
+/* Ending */
+.eo{position:fixed;inset:0;background:rgba(8,16,12,0);z-index:400;display:flex;align-items:center;
+  justify-content:center;pointer-events:none;opacity:0;transition:all 2.5s;overflow-y:auto}
+.eo.act{background:rgba(8,16,12,.96);pointer-events:all;opacity:1}
+.ec{max-width:560px;padding:50px 36px;text-align:center;opacity:0;transform:translateY(30px);transition:all 1.8s ease 1.2s;margin:auto}
+.eo.act .ec{opacity:1;transform:translateY(0)}
+.et{font-family:'Ma Shan Zheng',cursive;font-size:32px;letter-spacing:10px;margin-bottom:40px}
+.et.g{color:var(--bamboo-light);text-shadow:0 0 30px rgba(90,143,122,.3)}
+.et.r{color:var(--red);text-shadow:0 0 30px rgba(139,32,32,.4)}
+.etx{font-size:14.5px;line-height:2.5;color:rgba(168,197,184,.8);letter-spacing:.8px;margin-bottom:35px}
+.es{font-size:11px;color:rgba(90,143,122,.3);letter-spacing:2px;margin-bottom:28px}
+.ew{font-size:22px;font-family:'Ma Shan Zheng',cursive;letter-spacing:14px;opacity:0}
+.ew.g{color:var(--bamboo-light)}.ew.r{color:var(--red)}
+.eo.act .ew{animation:wp 3.5s ease-in-out 3.5s infinite}
+@keyframes wp{0%,100%{opacity:.25;transform:scale(1)}50%{opacity:1;transform:scale(1.04)}}
+.ecl{margin-top:40px;padding:10px 35px;background:transparent;border:1px solid rgba(90,143,122,.2);
+  color:rgba(168,197,184,.4);font-family:'Noto Serif SC',serif;font-size:12px;letter-spacing:5px;
+  cursor:pointer;transition:all .3s}
+.ecl:hover{border-color:rgba(168,197,184,.5);color:rgba(168,197,184,.7)}
+
+/* Turn-back */
+.tbt{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Ma Shan Zheng',cursive;
+  font-size:90px;color:var(--red);letter-spacing:25px;z-index:500;opacity:0;pointer-events:none;
+  text-shadow:0 0 80px rgba(139,32,32,.6)}
+.tbt.flash{animation:tb 4.5s ease-in-out forwards}
+@keyframes tb{0%{opacity:0;transform:translate(-50%,-50%) scale(.8)}10%,90%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.1)}}
+
+@media(max-width:800px){
+  .paper{margin:14px 8px;padding:34px 20px 50px}
+  .hdr h1{font-size:18px;letter-spacing:3px}
+  .bamboo-bg{display:none}.cd{width:30px;height:30px}
+  .hb{max-width:90%;padding:30px 20px}.ht{font-size:15px}
+  .et{font-size:24px}.tbt{font-size:50px;letter-spacing:14px}
+  .gb{right:8px;max-width:200px;font-size:12.5px;padding:14px 16px}
+  .ec{padding:40px 20px}
+}
+</style>
+</head>
+<body>
+<div class="bamboo-bg">
+  <div class="bs"></div><div class="bs"></div><div class="bs"></div><div class="bs"></div><div class="bs"></div><div class="bs"></div>
+</div>
+<div class="leaf" style="top:12%;left:4%"><svg viewBox="0 0 40 14"><path d="M2 7Q10 0 20 3Q30 0 38 7Q30 14 20 11Q10 14 2 7Z" fill="rgba(90,143,122,.14)"/></svg></div>
+<div class="leaf" style="top:40%;right:5%;animation-delay:5s"><svg viewBox="0 0 40 14"><path d="M2 7Q10 0 20 3Q30 0 38 7Q30 14 20 11Q10 14 2 7Z" fill="rgba(90,143,122,.11)"/></svg></div>
+<div class="leaf" style="top:70%;left:3%;animation-delay:10s"><svg viewBox="0 0 40 14"><path d="M2 7Q10 0 20 3Q30 0 38 7Q30 14 20 11Q10 14 2 7Z" fill="rgba(90,143,122,.1)"/></svg></div>
+
+<div class="paper" id="paper">
+  <div class="cd tl"></div><div class="cd tr"></div><div class="cd bl"></div><div class="cd br"></div>
+  <div class="ist i1" id="is1"></div><div class="ist i2" id="is2"></div><div class="ist i3" id="is3"></div>
+
+  <div class="hdr">
+    <div class="seal">苍穹</div>
+    <h1>清静峰生活满意度调研</h1>
+    <div class="sub">苍穹山派内务风纪改良计划 · 第三期</div>
+    <div class="org">调研执行：内务弟子 ／ 编号：QJ-0097 ／ 密级：峰主亲启</div>
+  </div>
+
+  <div class="notice">
+    <strong>致清静峰峰主尊鉴：</strong><br>
+    本问卷系苍穹山派"风纪改良计划"例行调研，旨在了解各峰峰主日常起居、弟子管理及情感状态，以期改善峰内弟子福祉。所有作答内容将严格保密，仅供内务使用。请如实作答。
+    <div class="hn">（本卷由内务弟子亲送亲取，不经他手。）</div>
+  </div>
+
+  <div class="pbar" id="pbar"></div>
+  <div class="qa" id="qa"></div>
+</div>
+
+<div class="gb" id="gb"><div class="sp">回声</div><div id="gt"></div></div>
+
+<div class="ho" id="ho">
+  <div class="hb" id="hbox">
+    <div class="ht" id="htxt"></div>
+    <div class="hbtn-row" id="hbtns"></div>
+  </div>
+</div>
+
+<div class="tbt" id="tbt">回 头</div>
+
+<div class="eo" id="eo">
+  <div class="ec">
+    <div class="et" id="eT"></div>
+    <div class="etx" id="eTx"></div>
+    <div class="es" id="eS"></div>
+    <div class="ew" id="eW"></div>
+    <button class="ecl" onclick="document.getElementById('eo').classList.remove('act')">……落 幕</button>
+  </div>
+</div>
+
+<script>
+/* ═══ DATA (Original Copy) ═══ */
+var QS = [
+  {num:'壹',title:'您通常每日的起居时辰是？',opts:[
+    {t:'卯时之前便已起身，风雨不误',p:0},
+    {t:'卯时至辰时之间，按时修习',p:2},
+    {t:'近来常常失眠，辰时后方能起身',p:3},
+    {t:'入夜难眠，时常坐到天明',p:5,w:'（您为清静峰殚精竭虑，思虑过重了。）'}
+  ]},
+  {num:'贰',title:'您在清静峰日常会是？',opts:[
+    {t:'教导门下弟子课业',p:0},
+    {t:'研读典籍、修炼功法',p:1},
+    {t:'独自在竹林静坐，不愿见人',p:3},
+    {t:'发呆，偶尔走到某间侧室门前又折返',p:2}
+  ]},
+  {num:'叁',title:'您目前对竹舍居住环境的私密性是否满意？',opts:[
+    {t:'非常满意，无人打扰',p:0},
+    {t:'一般，偶有弟子求见',p:1},
+    {t:'总觉得夜里有人在窗外，但推窗又不见踪影',p:4,w:'（您看见了谁？）'}
+  ]},
+  {num:'肆',title:'您近来通常与何人一同用膳？',opts:[
+    {t:'独自一人',p:3,tw:'（从前似乎不是这样的吧。）'},
+    {t:'与门下现有弟子同席',p:0},
+    {t:'偶尔与其他峰的同门',p:1},
+    {t:'常与他人同席，热闹得很',p:0}
+  ]},
+  {num:'伍',title:'您是否会想起以前离开清静峰的弟子？',opts:[
+    {t:'从不',p:0},
+    {t:'偶尔想起，但很快便放下了',p:2},
+    {t:'时常想起，尤其是深夜竹风声起之时',p:4},
+    {t:'每一天都在想',p:6,w:'（每一天<span class="r">吗</span>？）'}
+  ]},
+  {num:'陆',title:'如果有人在子时潜入清静峰，只为远远看您一眼便离去——您会觉得？',opts:[
+    {t:'大胆狂徒，必须严惩',p:0},
+    {t:'不关心，清静峰阵法自会拦住',p:1},
+    {t:'有些触动，或许可以不追究',p:4,w:'（你在害怕吗？）'},
+    {t:'若真有这样的人，我想当面见他',p:6,popup6:true}
+  ]},
+  {num:'柒',title:'听闻您近来常独自在竹舍擦拭一柄旧剑——请问那是？',opts:[
+    {t:'只是日常保养佩剑而已',p:0},
+    {t:'一位故人留下的',p:4},
+    {t:'一位已经不在的弟子的遗物',p:5},
+    {t:'不必在问卷中过问此事',p:2,w:'…您在逃避作答吗？'}
+  ]},
+  {num:'捌',title:'您近来可有反复做过什么梦？',branch:true,opts:[
+    {t:'不记得做过什么梦，这个问题没有意义',p:0,branchEnd:true},
+    {t:'梦到过深渊般的黑暗，醒来心跳如擂',p:2,branchEnd:true},
+    {t:'梦到过一个人跌落的背影，伸手却什么也没抓住',p:4},
+    {t:'梦到有人在喊我，声音由近至远，像是从很深很深的地方传上来，我不想醒来',p:6,g:'您听见了谁的声音。'}
+  ]}
+];
+
+var Q9 = {num:'玖',sin:true,title:'师尊，您是否相信人与魔并无差别？',opts:[
+  {t:'人魔殊途，不可相提并论',p:-2,tw:'您说过的话，转眼就不承认了吗？'},
+  {t:'曾经信过，但现在不确定了',p:3},
+  {t:'仍然相信，从未改变',p:5},
+  {t:'信不信都无用——该做的事还是会做',p:1,gtw:'该做的事。抛下我，是师尊"该做的事"吗。'}
+]};
+
+var Q10 = {num:'拾',sin:true,title:'师尊，假设有一个人——您明知他不会死，但您还是亲手将他推入了万劫不复之地。您觉得他该恨您吗？',opts:[
+  {t:'他活下来了就好。我做的没有错',p:-3,g:'没有错……没有错吗。'},
+  {t:'他应该恨我。我也做好了被恨的准备',p:3},
+  {t:'我不知道他会不会恨……但我很想知道他现在好不好',p:6},
+  {t:'他若归来，我有许多话想对他说',p:8,w:'…'}
+]};
+
+var Q11 = {num:'拾壹',sin:true,title:'最后一个问题——师尊，如果那个人此刻就站在您面前，您认得出来吗？',opts:[
+  {t:'认不出来',p:0,disabled:true},
+  {t:'也许认得出来，也许认不出',p:2},
+  {t:'如果是他……我一定认得出来',p:6,w:'（师尊。我就在这里。）'},
+  {t:'我每天都在等他回来。不管他变成什么样子',p:8,g:'您等我。……您真的在等我吗？'}
+]};
+
+/* ═══ STATE ═══ */
+var curQ=0,scores=[],stain=0,selOpt=null,totalDots=12,ghostTmr=null;
+var phase2Qs=[Q9,Q10,Q11];
+var inPhase2=false,p2idx=0;
+
+/* ═══ INIT ═══ */
+function init(){
+  var b=document.getElementById('pbar');
+  for(var i=0;i<totalDots;i++){var d=document.createElement('div');d.className='pd'+(i===0?' cur':'');d.id='pd'+i;b.appendChild(d)}
+  renderQ(0);
+}
+
+/* ═══ RENDER normal Q ═══ */
+function renderQ(idx){
+  var a=document.getElementById('qa');a.innerHTML='';
+  if(idx>=QS.length){return;}
+  var q=QS[idx],s=document.createElement('div');s.className='qs act';
+  var h='<div class="qn">'+q.num+'</div><div class="qt">'+q.title+'</div><div class="opts">';
+  for(var i=0;i<q.opts.length;i++){
+    var o=q.opts[i];
+    h+='<label class="ol" data-i="'+i+'" data-p="'+o.p+'"';
+    if(o.g)h+=' data-g="'+esc(o.g)+'"';
+    if(o.popup6)h+=' data-popup6="1"';
+    if(o.branchEnd)h+=' data-brend="1"';
+    h+=' onclick="pick(this)"><input type="radio" name="q'+idx+'"><span>'+o.t;
+    if(o.w)h+='<span class="ow">'+o.w+'</span>';
+    if(o.tw)h+='<span class="tw" data-tw="'+esc(o.tw)+'"></span>';
+    h+='</span></label>';
+  }
+  h+='</div><div style="text-align:center"><button class="nb" id="nxb" onclick="nextQ()" style="display:none">下 一 题</button></div>';
+  s.innerHTML=h;a.appendChild(s);
+}
+
+/* ═══ RENDER phase2 Q ═══ */
+function renderP2(idx){
+  var a=document.getElementById('qa');a.innerHTML='';
+  var q=phase2Qs[idx],s=document.createElement('div');s.className='qs act';
+  var h='<div class="qn sin">'+q.num+'</div><div class="qt sin">'+q.title+'</div><div class="opts">';
+  for(var i=0;i<q.opts.length;i++){
+    var o=q.opts[i];
+    h+='<label class="ol'+(o.disabled?' disabled':'')+'" data-i="'+i+'" data-p="'+o.p+'"';
+    if(o.g)h+=' data-g="'+esc(o.g)+'"';
+    if(o.tw)h+=' data-tw2="'+esc(o.tw)+'"';
+    if(o.gtw)h+=' data-gtw="'+esc(o.gtw)+'"';
+    h+=' onclick="pickP2(this)"><input type="radio" name="p2q'+idx+'"'+(o.disabled?' disabled':'')+'>'; 
+    h+='<span>'+o.t;
+    if(o.w)h+='<span class="ow">'+o.w+'</span>';
+    if(o.tw)h+='<span class="tw" data-tw="'+esc(o.tw)+'"></span>';
+    h+='</span></label>';
+  }
+  h+='</div><div style="text-align:center"><button class="nb ss" id="nxb" onclick="nextP2()" style="display:none">下 一 题</button></div>';
+  s.innerHTML=h;a.appendChild(s);
+}
+
+/* ═══ RENDER Q12 ═══ */
+function renderQ12(){
+  // Phase 4: Horror Red Style
+  document.body.classList.remove('phase3-gradient');
+  document.body.classList.add('phase4-horror');
+  document.getElementById('paper').classList.add('horror');
+
+  var a=document.getElementById('qa');a.innerHTML='';
+  var s=document.createElement('div');s.className='qs act';
+  s.innerHTML='<div class="qn sin">拾贰</div>'+
+    '<div class="q12t">师尊，我抓到你了。</div>'+
+    '<textarea class="q12ta" id="q12i" placeholder="……沈峰主，请落笔。" oninput="onQ12(this)"></textarea>'+
+    '<div class="ch" id="chh">已书 0 字</div>'+
+    '<div style="text-align:center"><button class="nb ss" onclick="submit()">呈 交 问 卷</button></div>';
+  a.appendChild(s);
+}
+
+/* ═══ PICK (phase 1) ═══ */
+function pick(el){
+  if(el.classList.contains('disabled'))return;
+  var p=el.parentElement,all=p.querySelectorAll('.ol');
+  for(var i=0;i<all.length;i++)all[i].classList.remove('sel','dsel');
+  el.classList.add('sel');el.querySelector('input').checked=true;
+  selOpt={p:parseInt(el.getAttribute('data-p')),g:el.getAttribute('data-g'),
+    popup6:el.getAttribute('data-popup6'),brend:el.getAttribute('data-brend')};
+  if(selOpt.g)showGhost(selOpt.g);
+  var twEl=el.querySelector('.tw[data-tw]');
+  if(twEl&&!twEl._done){twEl._done=true;typewrite(twEl,twEl.getAttribute('data-tw'));}
+  if(selOpt.popup6){showQ6Popup();return;}
+  document.getElementById('nxb').style.display='inline-block';
+}
+
+/* ═══ PICK (phase 2) ═══ */
+function pickP2(el){
+  if(el.classList.contains('disabled'))return;
+  var p=el.parentElement,all=p.querySelectorAll('.ol');
+  for(var i=0;i<all.length;i++)all[i].classList.remove('sel','dsel');
+  el.classList.add('dsel');el.querySelector('input').checked=true;
+  selOpt={p:parseInt(el.getAttribute('data-p'))};
+  var g=el.getAttribute('data-g');
+  var gtw=el.getAttribute('data-gtw');
+  if(g)showGhost(g);
+  var twEl=el.querySelector('.tw[data-tw]');
+  if(twEl&&!twEl._done){twEl._done=true;typewrite(twEl,twEl.getAttribute('data-tw'));}
+  if(gtw)showGhostTW(gtw);
+  var tw2=el.getAttribute('data-tw2');
+  if(tw2){
+    var twSpan=el.querySelector('.tw');
+    if(twSpan&&!twSpan._done){twSpan._done=true;typewrite(twSpan,tw2);}
+  }
+  document.getElementById('nxb').style.display='inline-block';
+}
+
+/* ═══ NEXT (phase 1) ═══ */
+function nextQ(){
+  if(!selOpt)return;
+  scores.push(selOpt.p);
+  var wasBrEnd=!!selOpt.brend;
+  dotDone(curQ,false);
+  curQ++;selOpt=null;
+  dotCur(curQ);
+  if(curQ>=4&&stain===0){stain=1;document.getElementById('is1').classList.add('v');}
+  if(curQ===8&&QS[7].branch){
+    var total=0;for(var i=0;i<scores.length;i++)total+=scores[i];
+    if(wasBrEnd&&total<12){showEnding(1,total);return;}
+    enterPhase2();return;
+  }
+  if(curQ<QS.length){
+    renderQ(curQ);
+    document.getElementById('paper').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+}
+
+/* ═══ PHASE 2 ENTRY ═══ */
+function enterPhase2(){
+  inPhase2=true;p2idx=0;
+  stain=2;document.getElementById('is2').classList.add('v');
+  document.getElementById('paper').classList.add('bloodied');
+  // Phase 3: Gradient to Red
+  document.body.classList.add('phase3-gradient');
+  showQ9Intro();
+}
+
+/* ═══ Q9 two-stage intro ═══ */
+function showQ9Intro(){
+  var stage1='您梦见了谁？<br>您心里在想念谁？<br>您想抓住谁的手？<br><br>…';
+  showHorrorCustom(stage1,[{text:'……',cls:'',cb:function(){
+    document.getElementById('ho').classList.remove('act');
+    setTimeout(function(){
+      var stage2='<span class="r">师尊。好久不见。</span><br><br>这道题，您必须回答。<br>您曾经亲口对弟子说过的话——<br>您不会忘了吧？';
+      showHorrorCustom(stage2,[
+        {text:'我已经不记得了',cls:'',cb:function(){document.getElementById('ho').classList.remove('act');setTimeout(function(){renderP2(0);document.getElementById('paper').scrollIntoView({behavior:'smooth',block:'start'});},400);}},
+        {text:'我没有忘',cls:'',cb:function(){document.getElementById('ho').classList.remove('act');setTimeout(function(){renderP2(0);document.getElementById('paper').scrollIntoView({behavior:'smooth',block:'start'});},400);}}
+      ]);
+    },1200);
+  }}]);
+}
+
+/* ═══ NEXT (phase 2) ═══ */
+function nextP2(){
+  if(!selOpt)return;
+  scores.push(selOpt.p);
+  dotDone(8+p2idx,true);
+  p2idx++;selOpt=null;
+  dotCur(8+p2idx);
+  if(p2idx>=phase2Qs.length){
+    stain=3;document.getElementById('is3').classList.add('v');
+    dotCur(11);
+    renderQ12();
+    document.getElementById('paper').scrollIntoView({behavior:'smooth',block:'start'});
+    return;
+  }
+  if(p2idx===1){
+    showHorrorCustom('师尊心里没有我吗。<br><br><span class="r">我可是日日夜夜都在想着师尊啊。</span>',[
+      {text:'……知道了',cls:'',cb:function(){document.getElementById('ho').classList.remove('act');setTimeout(function(){renderP2(1);document.getElementById('paper').scrollIntoView({behavior:'smooth',block:'start'});},400);}}
+    ]);
+  } else if(p2idx===2){
+    showHorrorCustom('您偶尔会想我。<br><br><span class="r">我也在想您。我每时每刻都在想您。</span><br><br>回答我。',[
+      {text:'……知道了',cls:'',cb:function(){document.getElementById('ho').classList.remove('act');setTimeout(function(){renderP2(2);document.getElementById('paper').scrollIntoView({behavior:'smooth',block:'start'});},400);}}
+    ]);
+  }
+}
+
+/* ═══ Q6 popup ═══ */
+function showQ6Popup(){
+  var txt='您当真想要见到一个，只是想要看您一眼的人吗。';
+  showHorrorCustom('',[
+    {text:'否',cls:'dis',cb:null},
+    {text:'是',cls:'',cb:function(){
+      document.getElementById('ho').classList.remove('act');
+      selOpt={p:6};
+      scores.push(selOpt.p);
+      dotDone(curQ,false);curQ++;selOpt=null;dotCur(curQ);
+      renderQ(curQ);
+      document.getElementById('paper').scrollIntoView({behavior:'smooth',block:'start'});
+    }}
+  ]);
+  var htEl=document.getElementById('htxt');
+  htEl.innerHTML='';
+  typewrite(htEl,txt);
+}
+
+/* ═══ HORROR CUSTOM ═══ */
+function showHorrorCustom(html,buttons){
+  var ho=document.getElementById('ho'),hb=document.getElementById('hbox');
+  var htxt=document.getElementById('htxt'),hbtns=document.getElementById('hbtns');
+  htxt.innerHTML=html;hbtns.innerHTML='';
+  for(var i=0;i<buttons.length;i++){
+    var b=buttons[i];
+    var btn=document.createElement('button');
+    btn.className='hbtn'+(b.cls?' '+b.cls:'');
+    btn.textContent=b.text;
+    if(b.cb)(function(cb){btn.onclick=cb;})(b.cb);
+    hbtns.appendChild(btn);
+  }
+  ho.classList.add('act');
+}
+
+/* ═══ GHOST ═══ */
+function showGhost(text){
+  var gb=document.getElementById('gb'),gt=document.getElementById('gt');
+  if(ghostTmr)clearTimeout(ghostTmr);
+  gb.classList.remove('show');
+  setTimeout(function(){gt.textContent=text;gb.classList.add('show');
+    ghostTmr=setTimeout(function(){gb.classList.remove('show');},5500);
+  },200);
+}
+function showGhostTW(text){
+  var gb=document.getElementById('gb'),gt=document.getElementById('gt');
+  if(ghostTmr)clearTimeout(ghostTmr);
+  gb.classList.remove('show');
+  setTimeout(function(){gt.textContent='';gb.classList.add('show');
+    typewrite(gt,text);
+    ghostTmr=setTimeout(function(){gb.classList.remove('show');},7000);
+  },200);
+}
+
+/* ═══ TYPEWRITER (Fixed) ═══ */
+function typewrite(el,text,speed){
+  speed=speed||100;
+  el.style.display='block';el.innerHTML='';
+  var i=0;
+  var tid = Math.random().toString(36).substr(2, 9);
+  el._tid = tid;
+  function go(){
+    if(el._tid !== tid) return;
+    if(i<text.length){
+      if(text[i]==='<'){
+        var end=text.indexOf('>',i);
+        if(end!==-1){el.innerHTML+=text.substring(i,end+1);i=end+1;go();return;}
+      }
+      el.innerHTML+=text[i];i++;setTimeout(go,speed);
+    }
+  }
+  go();
+}
+
+/* ═══ DOTS ═══ */
+function dotDone(idx,dark){
+  var d=document.getElementById('pd'+idx);
+  if(d){d.classList.remove('cur');d.classList.add(dark?'dk':'done');}
+}
+function dotCur(idx){
+  var d=document.getElementById('pd'+idx);
+  if(d)d.classList.add('cur');
+}
+
+/* ═══ Q12 ═══ */
+var q12g={};
+function onQ12(ta){
+  var l=ta.value.length;
+  document.getElementById('chh').textContent='已书 '+l+' 字';
+  if(l===1&&!q12g[1]){q12g[1]=1;showGhost('师尊肯落笔了……');}
+  if(l>=15&&l<19&&!q12g[15]){q12g[15]=1;showGhost('……好。');}
+}
+
+function calcBonus(){
+  var el=document.getElementById('q12i');if(!el)return 0;
+  var t=el.value,b=0;
+  if(/后悔/.test(t))b+=2;
+  if(/冰河|洛冰河/.test(t))b+=2;
+  if(/回来|等你|找你/.test(t))b+=2;
+  var ew=['心疼','对不起','爱','想你','想念','抱歉','舍不得','放不下','不该','错了'],ec=0;
+  for(var i=0;i<ew.length;i++)if(t.indexOf(ew[i])!==-1)ec++;
+  b+=Math.min(ec,3);
+  if(t.length>20)b+=1;
+  if(t.length>50)b+=1;
+  return Math.min(b,10);
+}
+
+/* ═══ SUBMIT ═══ */
+function submit(){
+  var total=0;
+  for(var i=0;i<scores.length;i++)total+=scores[i];
+  total+=calcBonus();
+  dotDone(11,true);
+  var n=total<=14?1:(total<=35?2:3);
+  showEnding(n,total);
+}
+
+/* ═══ ENDINGS ═══ */
+function showEnding(num,score){
+  var eo=document.getElementById('eo'),eT=document.getElementById('eT'),
+      eTx=document.getElementById('eTx'),eS=document.getElementById('eS'),
+      eW=document.getElementById('eW');
+  eS.textContent='调研编号 QJ-0097 ／ 总分：'+score+' ／ 密级：仅你我可见';
+
+  if(num===1){
+    eT.textContent='【 遗 忘 】';eT.className='et r';
+    eTx.innerHTML=
+      '原来如此。<br><br>'+
+      '我知道我醒了，耳边的心跳已经微弱，我已经什么都听不到了，只是眼泪打湿您的襟口，我又想去握住您的手，一阵冰凉。<br><br>'+
+      '为什么我连您的一点垂怜，都只是昙花一现。<br><br>'+
+      '我恨你。<br><br>'+
+      '<span style="font-size:12px;opacity:.4">问卷到此结束。该调研弟子已从苍穹山名册中除名。此人从未存在过。</span>';
+    eW.textContent='';eW.className='ew r';
+    eo.classList.add('act');
+
+  } else if(num===2){
+    eT.textContent='【 纠 缠 】';eT.className='et g';
+    eTx.innerHTML=
+      '师尊，您还记得吗。<br><br>'+
+      '师尊在梦里问我，是不是无论遭受什么样的苦楚折磨，都能忍受。<br>'+
+      '我说能。旁人无论如何，我都可以毫不在乎。<br>'+
+      '可这苦楚折磨，不能是您给我的。<br><br>'+
+      '我曾经控制不住自己的梦，在梦里，我总看见我自己从您掌心坠落，血只流了一点点，鲜红的，温热的血明明都在我的体内，我却感觉好冷。<br><br>'+
+      '师尊，您还会记得我吗。<br><br>'+
+      '<span style="font-size:12px;opacity:.4">调研弟子的字迹在最后一页突然变了。纸上有水渍。不知是泪是墨。</span>';
+    eW.textContent='入 梦 来';eW.className='ew g';
+    eo.classList.add('act');
+
+  } else {
+    var tb=document.getElementById('tbt');
+    tb.classList.add('flash');
+    setTimeout(function(){
+      tb.classList.remove('flash');
+      eT.textContent='【 深 渊 】';eT.className='et r';
+      eTx.innerHTML=
+        '师尊，我抓到你了。<br><br>'+
+        '我未曾想过这是一个怎样冰冷的怀抱，我总想依偎在你怀中，曾经在清静峰的竹舍，硬质的竹床，最柔软的依靠是他有热气的肩膀。<br><br>'+
+        '沈清秋依然是那样的沈清秋，那心跳，那流转，似乎都如往日，都如从前。<br><br>'+
+        '我想拥抱他，却不敢合上眼，合上眼时，他就从我的面前坠落。我想冲过去捉住他，却不再敢大声吼叫，我怕他突然消散在空气之中。<br><br>'+
+        '沈清秋在我的怀里安静的睡着了，一抬头，又看见那些虚影如鬼魅一般在殿里环绕。他轻轻地说，冰河，为师不怪你。<br><br>'+
+        '我感到茫然，想追着他走，我焦急地喊道说师尊，师尊等等我. 松开了掌心里的沈清秋，一只脚踩在大殿的地上，是那样冰，那样凉。我或许是做梦了，只是我睡不着，也醒不过来，沈清秋在我眼前离开了，又从身后扑上来，那些话语如鬼魅般在我的耳边回响。<br><br>'+
+        '<span style="color:rgba(168,197,184,.6);font-style:italic">冰河，魔族若能一心向善，自然也与人族无差。</span><br>'+
+        '<span style="color:rgba(168,197,184,.6);font-style:italic">冰河，只要不刻意为非作歹，一心向正，那便可以为友。</span><br>'+
+        '<span style="color:rgba(168,197,184,.6);font-style:italic">冰河，为师相信你。</span><br><br>'+
+        '问卷结束。';
+      eW.textContent='回 头';eW.className='ew r';
+      eo.classList.add('act');
+    },4800);
+  }
+}
+
+/* ═══ UTIL ═══ */
+function esc(s){return s.replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+init();
+</script>
+</body>
+</html>
